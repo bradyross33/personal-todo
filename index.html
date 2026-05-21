@@ -592,8 +592,8 @@ function patchApp(){
   app.ongoing.other.forEach(t=>{if(t.threadUrl===undefined)t.threadUrl='';});
   if(!app.domains.find(d=>d.id==='ross-family')){
     app.domains.push({id:'ross-family',name:'Ross Family Enterprises',categories:[
-      {name:'Current projects',projects:[]},
-      {name:'Future ideas',projects:[]}
+      {id:'ross-current',name:'Current projects',projects:[]},
+      {id:'ross-future',name:'Future ideas',projects:[]}
     ]});
   }
   if(!app.domains.find(d=>d.id==='personal')){
@@ -2452,8 +2452,8 @@ async function init(){
     // Ensure Personal domain exists
     if(!app.domains.find(d=>d.id==='ross-family')){
     app.domains.push({id:'ross-family',name:'Ross Family Enterprises',categories:[
-      {name:'Current projects',projects:[]},
-      {name:'Future ideas',projects:[]}
+      {id:'ross-current',name:'Current projects',projects:[]},
+      {id:'ross-future',name:'Future ideas',projects:[]}
     ]});
   }
   if(!app.domains.find(d=>d.id==='personal')){
