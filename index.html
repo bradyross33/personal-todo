@@ -557,10 +557,11 @@ function updateSyncStatus(state){
 // Debounced save — writes to Drive + localStorage
 function save(d){
   saveLocal(d);
-  if(!getGistToken()){return;}
   clearTimeout(saveTimer);
   saveTimer=setTimeout(function(){
-    updateSyncStatus('saving');
+    const tok=getGistToken();
+    if(!tok){updateSyncStatus('');return;}
+    updateSyncStatus('syncing');
     saveToGist(d).then(function(){
       updateSyncStatus('synced');
     }).catch(function(e){
@@ -2531,7 +2532,7 @@ async function init(){
   } catch(err) {
     document.body.innerHTML='<div style="padding:2rem;font-family:sans-serif;color:#a32d2d;background:#fcebeb;border-radius:12px;margin:1rem">'
       +'<strong>Startup error:</strong> '+err.message+'<br><br>'
-      +'<button onclick="localStorage.clear();location.reload()" style="padding:8px 16px;cursor:pointer;border:1px solid #a32d2d;border-radius:8px;background:none;color:#a32d2d">Clear data &amp; reload</button>'
+      +'<button onclick="(function(){var t=localStorage.getItem(&quot;gist_token&quot;);localStorage.clear();if(t)localStorage.setItem(&quot;gist_token&quot;,t);location.reload();})()" style="padding:8px 16px;cursor:pointer;border:1px solid #a32d2d;border-radius:8px;background:none;color:#a32d2d">Clear data &amp; reload</button>'
       +'</div>';
     console.error(err);
   }
